@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  title: Auth Server API
+  description: API para login e registro de usuários com geração de token
+  version: 1.0.0
+
+paths:
+  /auth:
+    post:
+      summary: Login ou registro
+      description: Faz login ou cria o usuário se ele não existir. Retorna um token.
+      parameters:
+        - in: query
+          name: user
+          required: true
+          schema:
+            type: string
+          description: Nome do usuário
+        - in: query
+          name: password
+          required: true
+          schema:
+            type: string
+          description: Senha do usuário
+      responses:
+        '200':
+          description: Token gerado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Erro inesperado
+
+    get:
+      summary: Realiza login
+      description: Verifica se o login e senha estão corretos e retorna o token.
+      parameters:
+        - in: query
+          name: user
+          required: true
+          schema:
+            type: string
+          description: Nome do usuário
+        - in: query
+          name: password
+          required: true
+          schema:
+            type: string
+          description: Senha do usuário
+      responses:
+        '200':
+          description: Token gerado com sucesso
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: Senha inválida
+        '404':
+          description: Usuário não encontrado
